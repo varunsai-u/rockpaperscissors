@@ -14,55 +14,62 @@ function getComputerChoice(){
     }
 
 }
-function getHumanChoice(){
-   let ch=prompt("enter your choice: ");
-   return ch;
-}
+
 function playRound(comChoice,humanChoice){
+    let ress;
+    if(computerScore<5 && humanScore<5){
     let humanChoice1=humanChoice.toLowerCase();
+    
     if(comChoice==humanChoice1){
-        return "game draw";
+        ress= "game draw";
     }
     if(comChoice=="rock" && humanChoice1=="scissors" || comChoice=="scissors" && humanChoice1=="rock" ){
         if(comChoice=="rock"){
             computerScore++;
-            return "computer wins";
+            ress="computer wins";
         }
         else{
             humanScore++;
-            return "human wins";
+            ress= "human wins";
         }
     }
     else{
         if(comChoice.length>humanChoice1.length){
             computerScore++;
-            return "computer wins";
+            ress= "computer wins";
         }
         else{
             humanScore++;
-            return "human wins";
+            ress= "human wins";
         }
     }
 }
-function playGame(){
-    for(let i=0;i<5;i++){
-let a=getComputerChoice();
-console.log("computer choice is "+a);
-let b=getHumanChoice();
-console.log("your choice is "+b);
-let c=playRound(a,b);
-console.log(c);
+    if(computerScore>=5 || humanScore>=5){
+        return (humanScore==5)? "Finally human wins":"Finally computer wins";
     }
-if(computerScore==humanScore){
-    return "finally game draws with score "+computerScore+"-"+humanScore;
+    else{
+    return ress;
+    }
+    
+
+
+
 }
-else if(computerScore>humanScore){
-    return "finally computer wins with score "+computerScore+"-"+humanScore;
-}
-else{
-    return "finally human wins with score "+computerScore+"-"+humanScore;
-}
-}
-let final=playGame();
-console.log(final);
+
+const rockbtn=document.querySelector("#rockbtn");
+const paperbtn=document.querySelector("#paperbtn");
+const scissorbtn=document.querySelector("#scissorbtn");
+const forres=document.querySelector("#forres");
+rockbtn.addEventListener("click",()=>{
+    let res=playRound(getComputerChoice(),"rock");
+    forres.innerHTML=`${res}<br>computer score:${computerScore} | human score:${humanScore}`;
+});
+paperbtn.addEventListener("click",()=>{
+    let res=playRound(getComputerChoice(),"paper");
+    forres.innerHTML=`${res}<br>computer score:${computerScore} | human score:${humanScore}`;
+});
+scissorbtn.addEventListener("click",()=>{
+    let res=playRound(getComputerChoice(),"scissors");
+    forres.innerHTML=`${res}<br>computer score:${computerScore} | human score:${humanScore}`;
+});
 
